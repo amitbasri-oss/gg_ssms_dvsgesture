@@ -6,7 +6,7 @@
 
 <!-- Insert your image here -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/NikolaZubic/LongSeqFlow/refs/heads/main/gg_ssm_core.png?token=GHSAT0AAAAAAC43OZOQ2HGF3HU3ILOK3BEUZ6XPF4Q" alt="GG-SSM Overview" width="500px"/>
+  <img src="https://raw.githubusercontent.com/uzh-rpg/gg_ssms/refs/heads/master/gg_ssm_core.png?token=GHSAT0AAAAAADAU7OVNBILIVBIAH7QVASZUZ7TC67Q" alt="GG-SSM Overview" width="500px"/>
 </p>
 <p align="center">
   <em>Figure: Overview of the GG-SSM pipeline applied to various tasks, such as event-based vision tasks, 
@@ -19,7 +19,6 @@ State Space Models (SSMs) are powerful tools for modeling sequential data in com
 We introduce **Graph-Generating State Space Models (GG-SSMs)**, a novel framework that overcomes these limitations by dynamically constructing graphs based on feature relationships. Using Chazelle's Minimum Spanning Tree algorithm, GG-SSMs adapt to the inherent data structure, enabling robust feature propagation across dynamically generated graphs and efficiently modeling complex dependencies.
 
 We validate GG-SSMs on 11 diverse datasets, including event-based eye-tracking, ImageNet classification, optical flow estimation, and six time series datasets. GG-SSMs achieve state-of-the-art performance across all tasks, surpassing existing methods by significant margins. Specifically, GG-SSM attains a top-1 accuracy of **84.9%** on ImageNet, outperforming prior SSMs by **1%**, reducing the KITTI-15 error rate to **2.77%**, and improving eye-tracking detection rates by up to **0.33%** with fewer parameters.
-
 These results demonstrate that dynamic scanning based on feature relationships significantly improves SSMs' representational power and efficiency, offering a versatile tool for various applications in computer vision and beyond.
 
 ## Citation
@@ -84,7 +83,7 @@ core/convolutional_graph_ssm/classification/models/graph_ssm.py
   ```
   core/convolutional_graph_ssm/classification/weights/
   ```
-  These weights can be downloaded from the [Releases](https://github.com/NikolaZubic/LongSeqFlow/releases) page.
+  These weights can be downloaded from the [Releases](https://github.com/uzh-rpg/gg_ssms/releases) page.
 
 #### Example Usage
 To run a forward pass on an image:
@@ -108,7 +107,7 @@ We incorporate **Graph-Generating SSMs** into the **MambaTS** codebase by replac
 
 ### How to Run
 1. **Scripts Location**  
-   All relevant scripts can be found [here](https://github.com/NikolaZubic/LongSeqFlow/tree/main/MambaTS/scripts).
+   All relevant scripts can be found [here](https://github.com/uzh-rpg/gg_ssms/tree/master/MambaTS/scripts).
    
 3. **Adjusting Paths & Parameters**  
    In each script (e.g., `run.py`), you can modify:
