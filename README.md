@@ -6,7 +6,7 @@
 
 <!-- Insert your image here -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/uzh-rpg/gg_ssms/refs/heads/master/gg_ssm_core.png?token=GHSAT0AAAAAADAU7OVNBILIVBIAH7QVASZUZ7TC67Q" alt="GG-SSM Overview" width="500px"/>
+  <img src="https://github.com/uzh-rpg/gg_ssms/blob/master/gg_ssm_core.png" alt="GG-SSM Overview" width="500px"/>
 </p>
 <p align="center">
   <em>Figure: Overview of the GG-SSM pipeline applied to various tasks, such as event-based vision tasks, 
