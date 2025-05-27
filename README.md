@@ -1,5 +1,5 @@
 # [CVPR'25 Highlight] Graph-Generating State Space Models (GG-SSMs)
-**Official PyTorch Implementation of our [CVPR 2025 paper](https://arxiv.org/abs/2412.12423).**  
+**Official PyTorch Implementation of our [CVPR 2025 Highlight paper](https://arxiv.org/abs/2412.12423).**  
 **Authors:** Nikola Zubić, Davide Scaramuzza
 
 ---
