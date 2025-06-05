@@ -2,6 +2,8 @@
 **Official PyTorch Implementation of our [CVPR 2025 Highlight paper](https://arxiv.org/abs/2412.12423).**  
 **Authors:** Nikola Zubić, Davide Scaramuzza
 
+Please, check the poster [here](https://github.com/uzh-rpg/gg_ssms/blob/master/CVPR25_Zubic_poster.pdf).
+
 ---
 
 <!-- Insert your image here -->
