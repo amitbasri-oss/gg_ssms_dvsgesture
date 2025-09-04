@@ -21,6 +21,7 @@ class LoggerOrchestrator:
         self.dataset_name = None
 
         self.distance = None
+        self.criterion = torch.nn.CrossEntropyLoss()
         self.iou_metric = None
 
     def log_orchestrator(
