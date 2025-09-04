@@ -42,7 +42,7 @@ def launch_fire(
     project_name="eye_tracking_ini_30",
     run_name=None,
     path_to_run=None,
-    path_to_config="retina/configs/default.yaml",
+    path_to_config="retina/configs/defaultDVSGesture.yaml",
 ):
 
     # GENERICS INITS
@@ -80,7 +80,7 @@ def launch_fire(
         quant_params = params["quant_params"]
 
         # verify conflicts
-        if dataset_params["dataset_name"] != "ini-30":
+        if dataset_params["dataset_name"] != "ini-30" and dataset_params["dataset_name"] != "DVSGesture":
             dataset_params["input_channel"] = 1
 
         # save configs
@@ -93,6 +93,10 @@ def launch_fire(
                 dataset_params, training_params, quant_params
             )
             yaml.dump(layers_config, open(f"{out_dir}/layer_configs.yaml", "w"))
+
+    num_classes = 2
+    if dataset_params["dataset_name"] == "DVSGesture":
+        num_classes = 11
 
     # LOAD DATASET
     input_shape = (
@@ -127,11 +131,12 @@ def launch_fire(
             )
             model.spiking_model(example_input)
 
-    elif training_params["arch_name"] == "3et":
+    elif training_params["arch_name"] == "3et" or training_params["arch_name"] == "DVSGesture":
         model = Baseline_3ET(
             height=dataset_params["img_height"],
             width=dataset_params["img_width"],
             input_dim=dataset_params["input_channel"],
+            num_classes=num_classes
         ).to(device=device)
 
     # LOAD QUANTIZATION

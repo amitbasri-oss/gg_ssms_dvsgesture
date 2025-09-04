@@ -2,7 +2,7 @@ import torch, pdb, os
 import pytorch_lightning as pl
 from sinabs import SNNAnalyzer
 from torch.optim.lr_scheduler import StepLR, ReduceLROnPlateau
-from training.loss import YoloLoss, EuclidianLoss, SpeckLoss
+from training.loss import YoloLoss, EuclidianLoss, SpeckLoss, CELoss
 from training.models.spiking.lpf import LPFOnline
 from training.models.utils import get_spiking_threshold_list
 
@@ -42,6 +42,8 @@ class EyeTrackingModelModule(pl.LightningModule):
         # Loss initialization
         if self.training_params["arch_name"] == "3et":
             self.euclidian_error = EuclidianLoss()
+        elif self.training_params["arch_name"] == "DVSGesture":
+            self.crossentropy_error = CELoss()
         else:
             self.yolo_error = YoloLoss(dataset_params, training_params)
         if self.training_params["arch_name"] == "retina_snn":
@@ -64,7 +66,10 @@ class EyeTrackingModelModule(pl.LightningModule):
         return self.model(x)
 
     def training_step(self, batch, batch_idx):
-        data, labels, _ = batch
+        if len(batch) != 2:
+            data, labels, _ = batch
+        else:
+            data, labels = batch
         self.model = self.model.to(self.device)
         data, labels = data.to(self.device), labels.to(self.device)
 
@@ -151,6 +156,11 @@ class EyeTrackingModelModule(pl.LightningModule):
         if self.training_params["arch_name"] == "3et":
             loss_dict.update(self.euclidian_error(outputs, labels))
             output_dict["memory"] = self.euclidian_error.memory
+
+        # Cross Entropy Loss
+        elif self.training_params["arch_name"] == "DVSGesture":
+            loss_dict.update(self.crossentropy_error(outputs, labels))
+            output_dict["memory"] = self.crossentropy_error.memory
 
         # Yolo Loss
         else:

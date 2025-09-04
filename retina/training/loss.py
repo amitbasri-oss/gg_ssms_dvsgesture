@@ -67,6 +67,27 @@ class EuclidianLoss(nn.Module):
 
         return loss
 
+class CELoss(nn.Module):
+    def __init__(self):
+        super(CELoss, self).__init__()
+        # Save last predictions and targets for loggings
+        self.memory = {
+            "points": {"target": None, "pred": None},
+            "box": {"target": None, "pred": None},
+        }
+        self.criterion = torch.nn.CrossEntropyLoss()
+
+    def forward(self, outputs, labels):
+        if labels.size() == torch.Size([1]):
+            labels = torch.tensor([labels[0]] * outputs.size(1))
+        labels = labels.to(outputs.device)
+        ce_loss = self.criterion(outputs[0], labels)
+        loss = {"distance_loss": ce_loss}
+
+        self.memory["points"]["target"] = labels.detach()
+        self.memory["points"]["pred"] = outputs[0].detach()
+
+        return loss
 
 class GaussianLoss(nn.Module):
     def __init__(self, threshold):
