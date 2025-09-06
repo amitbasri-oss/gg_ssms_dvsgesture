@@ -5,6 +5,7 @@ import pytorch_lightning as pl
 from torch.utils.data import DataLoader
 from data.datasets.ini_30.helper import get_ini_30_dataset
 from data.datasets.synthetic_3et.helper import get_3et_dataset
+from data.datasets.dvsgesture.helper import get_dvsgesture_dataset
 
 
 def select_dataset(dataset_name):
