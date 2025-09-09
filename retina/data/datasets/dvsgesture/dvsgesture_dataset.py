@@ -37,7 +37,7 @@ class DVSGestureDataset:
         return self.__class__.__name__
 
     def __getitem__(self, index):
-        if name == "val":
+        if self.name == "val":
             return self.y[index][0][self.val_idx], self.y[index][1]
         l = index % (len(self.y[0][0]) - 1)
         if l >= self.val_idx:
