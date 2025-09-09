@@ -9,15 +9,15 @@ import tonic
 class DVSGestureDataset:
     def __init__(
             self,
-            training_params,
-            dataset_params,
+            training_params = None,
+            dataset_params = None,
             name = "val",
             val_idx = 0
     ):
-        # transform = tonic.transforms.Compose(
-        #     [tonic.transforms.ToFrame(sensor_size=tonic.datasets.DVSGesture.sensor_size, n_event_bins=self.n_bins),
-        #      tonic.transforms.NumpyAsType(np.float32)])
-        transform = tonic.transforms.NumpyAsType(np.float32)
+        transform = tonic.transforms.Compose(
+            [tonic.transforms.ToFrame(sensor_size=tonic.datasets.DVSGesture.sensor_size, n_event_bins=self.n_bins),
+             tonic.transforms.NumpyAsType(np.float32)])
+        # transform = tonic.transforms.NumpyAsType(np.float32)
         if name == "val":
             self.y = tonic.datasets.DVSGesture(save_to='/mnt/c/Users/Admin/Documents', train=False, transform=transform)
         else:
@@ -27,8 +27,8 @@ class DVSGestureDataset:
 
     def __len__(self):
         if self.name == "val":
-            return 264
-        return 264 * 87786
+            return len(self.y)
+        return (len(self.y)) * (len(self.y[0][0]) - 1)
 
     def __repr__(self):
         return self.__class__.__name__
@@ -36,8 +36,8 @@ class DVSGestureDataset:
     def __getitem__(self, index):
         if name == "val":
             return self.y[index][0][self.val_idx], self.y[index][1]
-        l = index % 87786
+        l = index % (len(self.y[0][0]) - 1)
         if l >= self.val_idx:
             l += 1
-        i = index // 87786
+        i = index // (len(self.y[0][0]) - 1)
         return self.y[i][0][l], self.y[i][1]

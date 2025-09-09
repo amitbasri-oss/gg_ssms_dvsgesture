@@ -91,7 +91,10 @@ class EyeTrackingModelModule(pl.LightningModule):
         return output_dict
 
     def validation_step(self, batch, batch_idx, dataloader_idx=0):
-        data, labels, _ = batch
+        if len(batch) != 2:
+            data, labels, _ = batch
+        else:
+            data, labels = batch
         data, labels = data.to(self.device), labels.to(self.device)
 
         # Forward pass
