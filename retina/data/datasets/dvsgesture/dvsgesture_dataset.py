@@ -14,8 +14,11 @@ class DVSGestureDataset:
             name = "val",
             val_idx = 0
     ):
+        n_bins = 20
+        if dataset_params is not None:
+            n_bins = dataset_params["num_bins"]
         transform = tonic.transforms.Compose(
-            [tonic.transforms.ToFrame(sensor_size=tonic.datasets.DVSGesture.sensor_size, n_event_bins=self.n_bins),
+            [tonic.transforms.ToFrame(sensor_size=tonic.datasets.DVSGesture.sensor_size, n_event_bins=n_bins),
              tonic.transforms.NumpyAsType(np.float32)])
         # transform = tonic.transforms.NumpyAsType(np.float32)
         if name == "val":
