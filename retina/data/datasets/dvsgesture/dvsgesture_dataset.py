@@ -30,17 +30,13 @@ class DVSGestureDataset:
 
     def __len__(self):
         if self.name == "val":
-            return len(self.y)
-        return (len(self.y)) * (len(self.y[0][0]) - 1)
+            return 20
+        return len(self.y) - 20
 
     def __repr__(self):
         return self.__class__.__name__
 
     def __getitem__(self, index):
         if self.name == "val":
-            return self.y[index][0][self.val_idx], self.y[index][1]
-        l = index % (len(self.y[0][0]) - 1)
-        if l >= self.val_idx:
-            l += 1
-        i = index // (len(self.y[0][0]) - 1)
-        return self.y[i][0][l], self.y[i][1]
+            return self.y[index]
+        return self.y[index+20]
