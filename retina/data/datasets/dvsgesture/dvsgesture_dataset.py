@@ -12,7 +12,7 @@ class DVSGestureDataset:
             training_params = None,
             dataset_params = None,
             name = "val",
-            val_size = 20
+            val_idx = range(20)
     ):
         n_bins = 20
         if dataset_params is not None:
@@ -26,17 +26,19 @@ class DVSGestureDataset:
         else:
             self.y = tonic.datasets.DVSGesture(save_to='/mnt/c/Users/Admin/Documents', train=True, transform=transform)
         self.name = name
-        self.val_size = val_size
+        if name == "val":
+            self.idx = val_idx
+        else:
+            self.idx = []
+            for i in range(len(self.y)):
+                if i not in val_idx:
+                    self.idx.append(i)
 
     def __len__(self):
-        if self.name == "val":
-            return self.val_size
-        return len(self.y) - self.val_size
+        return len(self.idx)
 
     def __repr__(self):
         return self.__class__.__name__
 
     def __getitem__(self, index):
-        if self.name == "val":
-            return self.y[index]
-        return self.y[index+self.val_size]
+        return self.y[self.idx[index]]
