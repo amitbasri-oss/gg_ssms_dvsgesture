@@ -26,19 +26,16 @@ class DVSGestureDataset:
         else:
             self.y = tonic.datasets.DVSGesture(save_to='/mnt/c/Users/Admin/Documents', train=True, transform=transform)
         self.name = name
-        if name == "val":
-            self.idx = val_idx
-        else:
-            self.idx = []
-            for i in range(len(self.y)):
-                if i not in val_idx:
-                    self.idx.append(i)
+        self.idx_lst = []
+        for i in range(len(self.y)):
+            if (name == "val") == (i in val_idx):
+                self.idx_lst.append(i)
 
     def __len__(self):
-        return len(self.idx)
+        return len(self.idx_lst)
 
     def __repr__(self):
         return self.__class__.__name__
 
     def __getitem__(self, index):
-        return self.y[self.idx[index]]
+        return self.y[self.idx_lst[index]]
