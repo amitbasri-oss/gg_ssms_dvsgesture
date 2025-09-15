@@ -27,7 +27,6 @@ class DVSGestureDataset:
             self.y = tonic.datasets.DVSGesture(save_to='/mnt/c/Users/Admin/Documents', train=True, transform=transform)
         self.name = name
         self.idx_lst = []
-        print(type(val_idx))
         for i in range(len(self.y)):
             if (name == "val") == (i in val_idx):
                 self.idx_lst.append(i)
