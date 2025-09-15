@@ -166,7 +166,7 @@ class LoggingCallback(pl.Callback):
 
     def on_train_batch_end(self, trainer, pl_module, outputs, batch, batch_idx):
         self.logger.dataset_name = "train"
-        create_gifts = batch_idx > len(trainer.train_dataloader) - 3
+        create_gifts = (batch_idx > len(trainer.train_dataloader) - 3) and (self.logger.training_params["arch_name"] != "DVSGesture")
 
         self.logger.log_orchestrator(
             data=batch,
@@ -179,7 +179,7 @@ class LoggingCallback(pl.Callback):
 
     def on_validation_batch_end(self, trainer, pl_module, outputs, batch, batch_idx):
         self.logger.dataset_name = "val"
-        create_gifts = batch_idx > len(trainer.num_val_batches) - 3
+        create_gifts = (batch_idx > len(trainer.num_val_batches) - 3) and (self.logger.training_params["arch_name"] != "DVSGesture")
         self.logger.log_orchestrator(
             data=batch,
             epoch=trainer.current_epoch,

@@ -14,7 +14,7 @@ def select_dataset(dataset_name):
     elif dataset_name == "3et-data":
         return get_3et_dataset
     elif dataset_name == "DVSGesture":
-        return tonic.datasets.DVSGesture
+        return get_dvsgesture_dataset
     else:
         raise NotImplementedError(f"Dataset {dataset_name} is not implemented")
 
@@ -32,24 +32,16 @@ class EyeTrackingDataModule(pl.LightningDataModule):
     def setup(self, stage=None):
         # Setup for each stage (train, val, test) based on the dataset
         get_dataset_fn = select_dataset(self.dataset_name)
-        if self.dataset_name == "DVSGesture":
-            transform = tonic.transforms.Compose(
-                [tonic.transforms.ToFrame(sensor_size=tonic.datasets.DVSGesture.sensor_size, n_event_bins=self.n_bins),
-                 tonic.transforms.NumpyAsType(np.float32)])
-            self.train_dataset = get_dataset_fn(save_to='/mnt/c/Users/Admin/Documents', train=True, transform=transform)
-            self.val_dataset = get_dataset_fn(save_to='/mnt/c/Users/Admin/Documents', train=False, transform=transform)
-
-        else:
-            self.train_dataset = get_dataset_fn(
-                name="train",
-                dataset_params=self.dataset_params,
-                training_params=self.training_params,
-            )
-            self.val_dataset = get_dataset_fn(
-                name="val",
-                dataset_params=self.dataset_params,
-                training_params=self.training_params,
-            )
+        self.train_dataset = get_dataset_fn(
+            name="train",
+            dataset_params=self.dataset_params,
+            training_params=self.training_params,
+        )
+        self.val_dataset = get_dataset_fn(
+            name="val",
+            dataset_params=self.dataset_params,
+            training_params=self.training_params,
+        )
 
     def train_dataloader(self, sampler=None):
         return DataLoader(
