@@ -39,7 +39,7 @@ training_params:
 dataset_params:
   # dataset settings
   dataset_name: DVSGesture # ["ini-30", "3et-data", "DVSGesture"]
-  ini30_val_idx: 1 
+  ini30_val_idx: 20
 
   # input shape
   num_bins: 20

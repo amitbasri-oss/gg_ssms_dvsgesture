@@ -28,6 +28,6 @@ def get_dvsgesture_dataset(name, training_params, dataset_params):
     """
 
     dataset = DVSGestureDataset(
-        training_params=training_params, dataset_params=dataset_params, name=name, val_idx=dataset_params["ini30_val_idx"])
+        training_params=training_params, dataset_params=dataset_params, name=name, val_idx=range(dataset_params["ini30_val_idx"]))
 
     return dataset
